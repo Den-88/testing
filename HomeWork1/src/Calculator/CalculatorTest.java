@@ -72,5 +72,35 @@ public class CalculatorTest {
         // }
         //   assert 0 == seminars.first.Calculator.Calculator.calculation(2, 6, '+');
         //    assertThat(seminars.first.Calculator.Calculator.calculation(2, 6, '+')).isEqualTo(0);
+
+        // Тесты для функции извлечения корня squareRootExtraction
+
+        // Тест на извлечение корня из нуля, ождаемое значение = 0
+        assertThat(squareRootExtraction(0)).isEqualTo(0);
+        // Тест на извлечение корня из 10, результат - дробное значение, прверяем с точностью до тысячных, ождаемое значение = 3.1623
+        assertThat(squareRootExtraction(10)).isEqualTo(3.162, offset(0.001));
+        // Тест на извлечение корня из 25, результат - целое число, ождаемое значение = 5
+        assertThat(squareRootExtraction(25)).isEqualTo(5);
+        // Тест на извлечение корня из отрицательного числа, ожидаемый результат - выброс исключения IllegalArgumentException
+        assertThatThrownBy(() ->
+                squareRootExtraction(-7)
+        ).isInstanceOf(IllegalArgumentException.class);
+
+        // Тесты для функции вычисления суммы покупки со скидкой calculatingDiscount
+
+        // Тест, цена товара - 150, скидка 50%, ожидаемая цена со скидкой - 75
+        assertThat(calculatingDiscount(150, 50)).isEqualTo(75);
+        // Тест, цена товара - 825, скидка 100%, ожидаемая цена со скидкой - 0
+        assertThat(calculatingDiscount(825, 100)).isEqualTo(0);
+        // Тест, цена товара - 200, скидка 0%, ожидаемая цена со скидкой - 200
+        assertThat(calculatingDiscount(200, 0)).isEqualTo(200);
+        // Тест, цена товара - 410, скидка 150%, ожидаем исключение ArithmeticException т.к. скидка более 100%
+        assertThatThrownBy(() ->
+                calculatingDiscount(410, 150)
+        ).isInstanceOf(ArithmeticException.class);
+        // Тест, цена товара - 50, скидка -5%, ожидаем исключение ArithmeticException т.к. скидка отрицательная
+        assertThatThrownBy(() ->
+                calculatingDiscount(50, -5)
+        ).isInstanceOf(ArithmeticException.class);
     }
 }
